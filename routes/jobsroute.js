@@ -1,8 +1,9 @@
 const express=require('express')
 const jobRouter=express.Router();
-const {getAllUser,getUser,createUser,deleteUser,updateUser}=require('../controller/jobs')
+const {getAllJobs,getJob,createJob,deleteJob,updateJob}=require('../controller/jobs')
 
-jobRouter.route('/').get(getAllUser).post(createUser);
-jobRouter.route('/:id').get(getUser).post(deleteUser).patch(updateUser)
+jobRouter.route('/create').post(createJob);
+jobRouter.route('/').get(getAllJobs);
+jobRouter.route('/:id').get(getJob).post(deleteJob).patch(updateJob)
 
 module.exports=jobRouter
