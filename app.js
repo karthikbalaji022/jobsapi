@@ -2,6 +2,11 @@ require('dotenv').config();
 require('express-async-errors');
 const express=require('express');
 const app=express();
+const xss=require('xss-clean');
+const cors=require('cors');
+const helmet=require('helmet');
+const ratelimt=require('express-rate-limit');
+
 const {connect}=require('./db/connect');
 const UserDb=require('./model/user');
 const errorHandle=require('./middleware/errorHandle');
@@ -11,11 +16,19 @@ const jobsRoute=require('./routes/jobsroute');
 const authenticate=require('./middleware/authentications');
 
 app.use(express.json())
+app.set('trust proxy',1);
+app.use(ratelimt({
+    window:15*60*100,
+    max:100,
+}));
 
+app.use(helmet());
+app.use(cors());
+app.use(xss());
 
 app.get('/',async (req,res)=>{
 
-    console.log(data);res.status(200).json({msg:data})
+   res.status(200).json({msg:data})
 });
 
 app.use('/api/user',authRoute)

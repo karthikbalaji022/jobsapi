@@ -3,7 +3,6 @@ const jwt=require('jsonwebtoken');
 
 async function authenticate(req,res,next){
     const tokenAuth=req.headers.authorization;
-    console.log(tokenAuth,"in auth middle")
     if(!tokenAuth || !tokenAuth.startsWith("Bearer" )){
         res.status(404).json({msg:"No token present"})
     }else{
